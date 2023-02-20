@@ -1,0 +1,12 @@
+.pagination_container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.active {
+    background-color: #d0d0d0;
+    border: 1px solid #d0d0d0;
+}
