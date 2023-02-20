@@ -11,13 +11,13 @@ function Home() {
   const [postPerPage, setPostsPerPage] = useState(6)
   const [showFilter, setShowFilter] = useState(false);
   const [showMobileFilter, setShowMobileFilter] = useState(false);
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
 
 
   const lastPostIndex = (currentPage * postPerPage)
   const firstPostIndex = lastPostIndex - postPerPage
-
+const close = "https://i8.amplience.net/i/jpl/close-1-162602bc0df8c8d4a3da0c9ddf062736"
 
 
   useEffect(() => {
@@ -30,7 +30,12 @@ function Home() {
       });
       data.then((value) => {
         console.log("returned", value[0].item.products);
-        const returned_data = value[0].item.products
+        let returned_data = value[0].item.products
+        if (minPrice && maxPrice) {
+            console.log("filter")
+            returned_data = returned_data.filter((item) => item.price.priceIncTax >= minPrice && item.price.priceIncTax <= maxPrice )
+        }
+        console.log("filtered", returned_data)
         setGeojson(returned_data)
         const post_page = returned_data.slice(firstPostIndex, lastPostIndex)
         setSlicedData(post_page)
@@ -38,15 +43,15 @@ function Home() {
       
     }
     fetchGeojson();
-  }, [currentPage]);
+  }, [currentPage, minPrice, maxPrice]);
 
 
-  const handleFilter = () => {
-    const filteredData = geojson.filter((item) => item.price.priceIncTax >= minPrice && item.price.priceIncTax <= maxPrice )
-    console.log(filteredData)
-    const post_page = filteredData.slice(firstPostIndex, lastPostIndex)
-    setSlicedData(post_page)
-  };
+//   const handleFilter = () => {
+//     const filteredData = geojson.filter((item) => item.price.priceIncTax >= minPrice && item.price.priceIncTax <= maxPrice )
+//     console.log(filteredData)
+//     const post_page = filteredData.slice(firstPostIndex, lastPostIndex)
+//     setSlicedData(post_page)
+//   };
 
   return (
     <div>
@@ -55,6 +60,14 @@ function Home() {
       <div className="product_container_main">
         <div className="product_filter_container">
         <div className="filter_title">Filter By</div>
+        <div className="active_filters">
+            {minPrice && maxPrice ? <div
+            className="price_filter_container"
+            ><img src={close} alt="close" onClick={() => {
+                setMinPrice(null);
+                setMaxPrice(null)
+            }}/>£{minPrice} - £{maxPrice}</div> : null}
+        </div>
         <div className="price_filter" onClick={() => setShowFilter(!showFilter)}>
           Price
         </div>
@@ -78,7 +91,7 @@ function Home() {
             className="price_field"
             onChange={(e) => setMaxPrice(e.target.value)}
           />
-          <button onClick={handleFilter} className="price_button">Go</button>
+
         </div>
       )}
         </div>
@@ -113,7 +126,7 @@ function Home() {
             className="price_field"
             onChange={(e) => setMaxPrice(e.target.value)}
           />
-          <button onClick={handleFilter} className="price_button">Go</button>
+
         </div>
       )}
             </div>
