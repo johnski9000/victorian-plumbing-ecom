@@ -34,6 +34,10 @@ body {
     width: 20px;
     padding-right: 5px;
   }
+  .style_container {
+    align-items: flex-start;
+    flex-flow: column;
+  }
   .filter_container,
   .recommended_container {
     display: flex;
@@ -58,7 +62,8 @@ body {
     width: 200px;
     background: #f2f0ea;
   }
-  .price_filter {
+  .price_filter,
+  .style_filter {
     padding: 1.125rem 0.75rem;
     background: white;
     margin: 0.45rem;
@@ -75,7 +80,11 @@ body {
     padding: 2px 10px;
     font-size: 16px;
   }
-  .price_container {
+  .style_filter {
+    margin-top: 10px;
+  }
+  .price_container,
+  .style_container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -107,7 +116,11 @@ body {
   .list_amount {
     display: none;
   }
-  .price_filter {
+  .style_filter {
+    margin-top: 10px;
+  }
+  .price_filter,
+  .style_filter {
     padding: 1.125rem 0.75rem;
     background: white;
   }
@@ -123,7 +136,9 @@ body {
     padding: 2px 10px;
     font-size: 16px;
   }
-  .price_container {
+  
+  .price_container,
+  .style_container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -132,6 +147,10 @@ body {
     padding-left: 10px;
     background: white;
     border-top: 0.1px solid grey;
+  }
+  .style_container {
+    flex-flow: column;
+    align-items: flex-start;
   }
   .filter_title {
     font-size: 1.5rem;
